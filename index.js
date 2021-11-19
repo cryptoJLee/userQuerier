@@ -77,14 +77,17 @@ const app = express()
 const port = process.env.PORT || 3000;
 
 app.get('/user/:address', async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
   var requestedAddress = req.params.address;
   console.log(requestedAddress);
-  
+  var result = {result: false};
   try {
     var state = contract.methods.userState(requestedAddress).call();
-    res.end((await state).toString());  
+    state = await state;
+    result.result = state;
+    res.end(JSON.stringify(result));
   } catch (e) {
-    res.end("false");
+    res.end(JSON.stringify(result));
   }
   
 })
