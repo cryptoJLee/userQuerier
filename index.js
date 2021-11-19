@@ -74,7 +74,7 @@ console.log(contract.options);
 
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.port || 3000;
 
 app.get('/user/:address', async (req, res) => {
   var requestedAddress = req.params.address;
